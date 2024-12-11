@@ -37,7 +37,7 @@ const PdfViewer = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center">
       <input
         type="file"
         accept="application/pdf"
@@ -46,34 +46,36 @@ const PdfViewer = () => {
       />
       <div className="">
         {file ? (
-          <>
+          <div className="flex items-center m-2">
             <Document
               file={file}
               onLoadSuccess={onDocumentLoadSuccess}
               className=""
+              externalLinkRel="noopener noreferrer"
             >
-              <Page pageNumber={pageNumber} />
+              <Page pageNumber={pageNumber} scale={1.2} />
             </Document>
-            <div className="flex  mt-4">
+            <div className="flex flex-col mt-4">
               <button
                 onClick={goToPrevPage}
+                onMouseEnter={() => console.log("hover")}
                 disabled={pageNumber <= 1}
-                className="px-4 py-2 bg-gray-300 rounded mr-2"
+                className=""
               >
-                Previous
+                ⬆️
               </button>
               <button
                 onClick={goToNextPage}
                 disabled={pageNumber >= (numPages || 1)}
-                className="px-4 py-2 bg-gray-300 rounded"
+                className=""
               >
-                Next
+                ⬇️
               </button>
             </div>
             <p className="mt-4">
               Page {pageNumber} of {numPages}
             </p>
-          </>
+          </div>
         ) : (
           <>
             <Document
@@ -83,7 +85,7 @@ const PdfViewer = () => {
             >
               <Page pageNumber={1} />
             </Document>
-            <div className="flex  mt-4">
+            {/* <div className="flex  mt-4">
               <button
                 onClick={goToPrevPage}
                 disabled={pageNumber <= 1}
@@ -101,7 +103,7 @@ const PdfViewer = () => {
             </div>
             <p className="mt-4">
               Page {pageNumber} of {numPages}
-            </p>
+            </p> */}
           </>
         )}
       </div>
