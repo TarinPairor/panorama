@@ -25,7 +25,7 @@ export default function Home() {
         </button>
       </div>
       {pdfViewers.map((index: number) => (
-        <div key={index}>
+        <div key={index} className="flex flex-col items-center">
           <PdfViewer />
           <div className="flex mt-4">
             <button

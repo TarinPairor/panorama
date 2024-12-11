@@ -53,7 +53,7 @@ const PdfViewer = () => {
               className=""
               externalLinkRel="noopener noreferrer"
             >
-              <Page pageNumber={pageNumber} scale={1.2} />
+              <Page pageNumber={pageNumber} scale={1} />
             </Document>
             <div className="flex flex-col mt-4">
               <button
@@ -72,8 +72,16 @@ const PdfViewer = () => {
                 ⬇️
               </button>
             </div>
-            <p className="mt-4">
-              Page {pageNumber} of {numPages}
+            <p className="mt-4 flex">
+              {/* <input
+                type="number"
+                value={pageNumber}
+                onChange={(e) => setPageNumber(parseInt(e.target.value))}
+                className="w-16"
+                step="0.01"
+                height={20}
+              ></input> */}
+              {pageNumber}/{numPages}
             </p>
           </div>
         ) : (
