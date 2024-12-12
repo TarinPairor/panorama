@@ -33,8 +33,8 @@ export default function PDFDocument({ file }: DocumentProps) {
   };
 
   return (
-    <div className="flex items-center m-2">
-      <div className="flex  flex-col items-center">
+    <div className="flex items-start m-2">
+      <div className="flex flex-col">
         <button
           onClick={increaseScale}
           className="p-2 bg-gray-200 rounded mb-2"
@@ -51,7 +51,7 @@ export default function PDFDocument({ file }: DocumentProps) {
         className=""
         externalLinkRel="noopener noreferrer"
       >
-        <Page pageNumber={pageNumber} scale={scale} height={400} width={400} />
+        <Page pageNumber={pageNumber} scale={scale} height={350} width={350} />
       </Doc>
       <div className="flex flex-col mt-4">
         <button
