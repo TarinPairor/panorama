@@ -51,7 +51,7 @@ export default function PDFDocument({ file }: DocumentProps) {
         className=""
         externalLinkRel="noopener noreferrer"
       >
-        <Page pageNumber={pageNumber} scale={scale} />
+        <Page pageNumber={pageNumber} scale={scale} height={400} width={400} />
       </Doc>
       <div className="flex flex-col mt-4">
         <button
