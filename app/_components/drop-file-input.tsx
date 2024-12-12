@@ -7,6 +7,7 @@ interface DropFileInputProps {
 
 const DropFileInput: React.FC<DropFileInputProps> = (props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
   const onDragEnter = () => wrapperRef.current?.classList.add("dragover");
@@ -22,6 +23,9 @@ const DropFileInput: React.FC<DropFileInputProps> = (props) => {
   const fileRemove = () => {
     setFile(null);
     props.onFileChange(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
@@ -36,7 +40,7 @@ const DropFileInput: React.FC<DropFileInputProps> = (props) => {
         <div className="drop-file-input__label">
           <p>Drag & Drop your file here</p>
         </div>
-        <input type="file" onChange={onFileDrop} />
+        <input type="file" ref={inputRef} onChange={onFileDrop} />
       </div>
       {file && (
         <div className="drop-file-preview">
