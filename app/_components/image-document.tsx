@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 interface DocumentProps {
   file: File;
@@ -7,9 +7,27 @@ interface DocumentProps {
 
 export default function ImageDocument({ file }: DocumentProps) {
   const [scale, setScale] = useState<number>(1);
+  const [imageDimensions, setImageDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>({
+    width: 350,
+    height: 350,
+  });
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  const handleImageLoad = () => {
+    if (imageRef.current) {
+      const img = imageRef.current;
+      setImageDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+    }
+  };
 
   const increaseScale = () => {
-    setScale((prevScale) => Math.min(prevScale + 0.1, 1.2));
+    setScale((prevScale) => Math.min(prevScale + 0.1, 4));
   };
 
   const decreaseScale = () => {
@@ -29,7 +47,13 @@ export default function ImageDocument({ file }: DocumentProps) {
           ⬇️
         </button>
       </div>
-      <div className="flex-grow">
+      <div
+        className="overflow-auto"
+        style={{
+          width: imageDimensions ? `${imageDimensions.width / 2}px` : "350px",
+          height: imageDimensions ? `${imageDimensions.height / 2}px` : "350px",
+        }}
+      >
         <div
           style={{
             transform: `scale(${scale})`,
@@ -38,10 +62,12 @@ export default function ImageDocument({ file }: DocumentProps) {
           }}
         >
           <Image
+            ref={imageRef}
             src={URL.createObjectURL(file)}
             alt="Selected file"
-            width={350}
-            height={350}
+            width={imageDimensions ? imageDimensions.width / 2 : 350}
+            height={imageDimensions ? imageDimensions.height / 2 : 350}
+            onLoad={handleImageLoad}
           />
         </div>
       </div>
