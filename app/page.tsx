@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import PdfViewer from "./_components/PdfViewer";
+import PdfViewer from "./_components/pdf-viewer";
 
 export default function Home() {
   const [pdfViewers, setPdfViewers] = useState<number[]>([]);
