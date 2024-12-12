@@ -6,6 +6,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import PDFDocument from "./pdf-document";
 import ImageDocument from "./image-document";
+import DropFileInput from "./drop-file-input";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -15,8 +16,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 const Viewer = () => {
   const [file, setFile] = useState<File | null>(null);
 
-  function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const selectedFile = event.target.files?.[0] || null;
+  // function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  //   const selectedFile = event.target.files?.[0] || null;
+  //   setFile(selectedFile);
+  // }
+
+  function onFileChange(selectedFile: File | null): void {
     setFile(selectedFile);
   }
 
@@ -35,12 +40,13 @@ const Viewer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <input
+      {/* <input
         type="file"
         accept="application/pdf,image/*"
         onChange={onFileChange}
         className="mb-4"
-      />
+      /> */}
+      <DropFileInput onFileChange={onFileChange} />
       <div className="">{renderFile()}</div>
     </div>
   );
