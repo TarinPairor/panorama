@@ -56,7 +56,7 @@ export default function ImageDocument({ file }: DocumentProps) {
         </button>
       </div>
       <div
-        className="overflow-auto"
+        className="overflow-auto border-2"
         style={{
           width: imageDimensions ? `${imageDimensions.width / 2}px` : "350px",
           height: imageDimensions ? `${imageDimensions.height / 2}px` : "350px",

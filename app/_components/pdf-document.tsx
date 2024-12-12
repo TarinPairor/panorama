@@ -55,7 +55,7 @@ export default function PDFDocument({ file }: DocumentProps) {
         </button>
       </div>
       <div
-        className="overflow-auto"
+        className="overflow-auto border-2"
         style={{
           width: pageDimensions ? `${pageDimensions.width / 2}px` : "350px",
           height: pageDimensions ? `${pageDimensions.height / 2}px` : "350px",
