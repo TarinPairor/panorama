@@ -6,6 +6,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import PDFDocument from "./pdf-document";
 import Image from "next/image";
+import ImageDocument from "./image-document";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -27,14 +28,7 @@ const Viewer = () => {
     if (fileType === "application/pdf") {
       return <PDFDocument file={file} />;
     } else if (fileType.startsWith("image/")) {
-      return (
-        <Image
-          src={URL.createObjectURL(file)}
-          alt="Selected file"
-          width={100}
-          height={100}
-        />
-      );
+      return <ImageDocument file={file} />;
     } else {
       return <p>{null}</p>;
     }

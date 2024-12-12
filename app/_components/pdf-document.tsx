@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Document as Doc, Page } from "react-pdf";
+import { Document, Page } from "react-pdf";
 
 interface DocumentProps {
   file: File;
@@ -45,14 +45,14 @@ export default function PDFDocument({ file }: DocumentProps) {
           ⬇️
         </button>
       </div>
-      <Doc
+      <Document
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
         className=""
         externalLinkRel="noopener noreferrer"
       >
         <Page pageNumber={pageNumber} scale={scale} height={350} width={350} />
-      </Doc>
+      </Document>
       <div className="flex flex-col mt-4">
         <button
           onClick={goToPrevPage}
