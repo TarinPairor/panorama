@@ -4,7 +4,7 @@ import { useState } from "react";
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import Document from "./document";
+import PDFDocument from "./pdf-document";
 import Image from "next/image";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -12,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const PdfViewer = () => {
+const Viewer = () => {
   const [file, setFile] = useState<File | null>(null);
 
   function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -25,7 +25,7 @@ const PdfViewer = () => {
 
     const fileType = file.type;
     if (fileType === "application/pdf") {
-      return <Document file={file} />;
+      return <PDFDocument file={file} />;
     } else if (fileType.startsWith("image/")) {
       return (
         <Image
@@ -53,4 +53,4 @@ const PdfViewer = () => {
   );
 };
 
-export default PdfViewer;
+export default Viewer;

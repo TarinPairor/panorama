@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import PdfViewer from "./_components/pdf-viewer";
+import Viewer from "./_components/viewer";
 
 export default function Home() {
   const [pdfViewers, setPdfViewers] = useState<number[]>([]);
@@ -26,7 +26,7 @@ export default function Home() {
       </div>
       {pdfViewers.map((index: number) => (
         <div key={index} className="flex flex-col items-center">
-          <PdfViewer />
+          <Viewer />
           <div className="flex mt-4">
             <button
               onClick={() => removePdfViewer(index)}

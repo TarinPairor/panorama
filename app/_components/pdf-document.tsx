@@ -5,7 +5,7 @@ interface DocumentProps {
   file: File;
 }
 
-export default function Document({ file }: DocumentProps) {
+export default function PDFDocument({ file }: DocumentProps) {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
 
