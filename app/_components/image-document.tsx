@@ -32,6 +32,16 @@ export default function ImageDocument({ file }: DocumentProps) {
     setScale((prevScale) => Math.max(prevScale - 0.1, 0.1));
   };
 
+  const onImageLoad = () => {
+    if (imageRef.current) {
+      const img = imageRef.current;
+      setImageDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+    }
+  };
+
   return (
     <div className="flex flex-grow items-start m-2">
       <div className="flex flex-col mr-4">
@@ -48,8 +58,8 @@ export default function ImageDocument({ file }: DocumentProps) {
       <div
         className="overflow-auto"
         style={{
-          width: imageDimensions ? `${imageDimensions.width}px` : "350px",
-          height: imageDimensions ? `${imageDimensions.height}px` : "350px",
+          width: imageDimensions ? `${imageDimensions.width / 2}px` : "350px",
+          height: imageDimensions ? `${imageDimensions.height / 2}px` : "350px",
         }}
       >
         <div
@@ -63,15 +73,7 @@ export default function ImageDocument({ file }: DocumentProps) {
             ref={imageRef}
             src={URL.createObjectURL(file)}
             alt="Selected file"
-            onLoad={() => {
-              if (imageRef.current) {
-                const img = imageRef.current;
-                setImageDimensions({
-                  width: img.naturalWidth,
-                  height: img.naturalHeight,
-                });
-              }
-            }}
+            onLoad={onImageLoad}
             style={{ width: "100%", height: "auto" }}
           />
         </div>
