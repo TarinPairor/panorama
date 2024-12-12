@@ -8,6 +8,7 @@ interface DocumentProps {
 export default function PDFDocument({ file }: DocumentProps) {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [scale, setScale] = useState<number>(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
@@ -23,15 +24,34 @@ export default function PDFDocument({ file }: DocumentProps) {
     );
   }
 
+  const increaseScale = () => {
+    setScale((prevScale) => Math.min(prevScale + 0.1, 4));
+  };
+
+  const decreaseScale = () => {
+    setScale((prevScale) => Math.max(prevScale - 0.1, 1));
+  };
+
   return (
     <div className="flex items-center m-2">
+      <div className="flex  flex-col items-center">
+        <button
+          onClick={increaseScale}
+          className="p-2 bg-gray-200 rounded mb-2"
+        >
+          ⬆️
+        </button>
+        <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
+          ⬇️
+        </button>
+      </div>
       <Doc
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
         className=""
         externalLinkRel="noopener noreferrer"
       >
-        <Page pageNumber={pageNumber} scale={1} />
+        <Page pageNumber={pageNumber} scale={scale} />
       </Doc>
       <div className="flex flex-col mt-4">
         <button
