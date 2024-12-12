@@ -71,8 +71,8 @@ export default function PDFDocument({ file }: DocumentProps) {
             pageNumber={pageNumber}
             scale={scale}
             onLoadSuccess={onPageLoadSuccess}
-            width={(pageDimensions?.width / 2) | 350}
-            height={(pageDimensions?.height / 2) | 350}
+            width={(pageDimensions?.width ?? 700) / 2}
+            height={(pageDimensions?.height ?? 700) / 2}
           />
         </Document>
       </div>

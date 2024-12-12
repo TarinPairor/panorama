@@ -1,5 +1,4 @@
-import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface DocumentProps {
   file: File;
@@ -10,21 +9,20 @@ export default function ImageDocument({ file }: DocumentProps) {
   const [imageDimensions, setImageDimensions] = useState<{
     width: number;
     height: number;
-  } | null>({
-    width: 350,
-    height: 350,
-  });
+  } | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const handleImageLoad = () => {
+  useEffect(() => {
     if (imageRef.current) {
       const img = imageRef.current;
-      setImageDimensions({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-      });
+      img.onload = () => {
+        setImageDimensions({
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+        });
+      };
     }
-  };
+  }, [file]);
 
   const increaseScale = () => {
     setScale((prevScale) => Math.min(prevScale + 0.1, 4));
@@ -50,8 +48,8 @@ export default function ImageDocument({ file }: DocumentProps) {
       <div
         className="overflow-auto"
         style={{
-          width: imageDimensions ? `${imageDimensions.width / 2}px` : "350px",
-          height: imageDimensions ? `${imageDimensions.height / 2}px` : "350px",
+          width: imageDimensions ? `${imageDimensions.width}px` : "350px",
+          height: imageDimensions ? `${imageDimensions.height}px` : "350px",
         }}
       >
         <div
@@ -61,13 +59,20 @@ export default function ImageDocument({ file }: DocumentProps) {
             position: "relative",
           }}
         >
-          <Image
+          <img
             ref={imageRef}
             src={URL.createObjectURL(file)}
             alt="Selected file"
-            width={imageDimensions ? imageDimensions.width / 2 : 350}
-            height={imageDimensions ? imageDimensions.height / 2 : 350}
-            onLoad={handleImageLoad}
+            onLoad={() => {
+              if (imageRef.current) {
+                const img = imageRef.current;
+                setImageDimensions({
+                  width: img.naturalWidth,
+                  height: img.naturalHeight,
+                });
+              }
+            }}
+            style={{ width: "100%", height: "auto" }}
           />
         </div>
       </div>
