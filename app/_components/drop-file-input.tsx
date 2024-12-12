@@ -18,7 +18,7 @@ const DropFileInput: React.FC<DropFileInputProps> = (props) => {
     const newFile = e.target.files?.[0] || null;
     setFile(newFile);
     props.onFileChange(newFile);
-    console.log(file);
+    // console.log(file);
   };
 
   const fileRemove = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Document, Page } from "react-pdf";
+import { Document, Page, pdfjs } from "react-pdf";
 
 interface DocumentProps {
   file: File;
@@ -9,9 +9,18 @@ export default function PDFDocument({ file }: DocumentProps) {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
+  const [pageDimensions, setPageDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
+  }
+
+  function onPageLoadSuccess(page: pdfjs.PDFPageProxy) {
+    const viewport = page.getViewport({ scale: 1 });
+    setPageDimensions({ width: viewport.width, height: viewport.height });
   }
 
   function goToPrevPage() {
@@ -45,14 +54,28 @@ export default function PDFDocument({ file }: DocumentProps) {
           ⬇️
         </button>
       </div>
-      <Document
-        file={file}
-        onLoadSuccess={onDocumentLoadSuccess}
-        className=""
-        externalLinkRel="noopener noreferrer"
+      <div
+        className="overflow-auto"
+        style={{
+          width: pageDimensions ? `${pageDimensions.width / 2}px` : "350px",
+          height: pageDimensions ? `${pageDimensions.height / 2}px` : "350px",
+        }}
       >
-        <Page pageNumber={pageNumber} scale={scale} height={350} width={350} />
-      </Document>
+        <Document
+          file={file}
+          onLoadSuccess={onDocumentLoadSuccess}
+          className=""
+          externalLinkRel="noopener noreferrer"
+        >
+          <Page
+            pageNumber={pageNumber}
+            scale={scale}
+            onLoadSuccess={onPageLoadSuccess}
+            width={(pageDimensions?.width / 2) | 350}
+            height={(pageDimensions?.height / 2) | 350}
+          />
+        </Document>
+      </div>
       <div className="flex flex-col mt-4">
         <button
           onClick={goToPrevPage}
@@ -71,14 +94,6 @@ export default function PDFDocument({ file }: DocumentProps) {
         </button>
       </div>
       <p className="mt-4 flex">
-        {/* <input
-       type="number"
-       value={pageNumber}
-       onChange={(e) => setPageNumber(parseInt(e.target.value))}
-       className="w-16"
-       step="0.01"
-       height={20}
-     ></input> */}
         {pageNumber}/{numPages}
       </p>
     </div>
