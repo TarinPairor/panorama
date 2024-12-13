@@ -16,9 +16,24 @@ export default function ImageDocument({ file }: DocumentProps) {
     if (imageRef.current) {
       const img = imageRef.current;
       img.onload = () => {
+        const maxDimension = 700;
+        const aspectRatio = img.naturalWidth / img.naturalHeight;
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            width = maxDimension;
+            height = maxDimension / aspectRatio;
+          } else {
+            height = maxDimension;
+            width = maxDimension * aspectRatio;
+          }
+        }
+
         setImageDimensions({
-          width: img.naturalWidth,
-          height: img.naturalHeight,
+          width,
+          height,
         });
       };
     }
@@ -32,13 +47,21 @@ export default function ImageDocument({ file }: DocumentProps) {
     setScale((prevScale) => Math.max(prevScale - 0.1, 0.1));
   };
 
-  const onImageLoad = () => {
-    if (imageRef.current) {
-      const img = imageRef.current;
-      setImageDimensions({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-      });
+  const increaseSize = () => {
+    if (imageDimensions) {
+      setImageDimensions((prevDimensions) => ({
+        width: prevDimensions.width + 10,
+        height: prevDimensions.height + 10,
+      }));
+    }
+  };
+
+  const decreaseSize = () => {
+    if (imageDimensions) {
+      setImageDimensions((prevDimensions) => ({
+        width: Math.max(prevDimensions.width - 10, 10),
+        height: Math.max(prevDimensions.height - 10, 10),
+      }));
     }
   };
 
@@ -49,27 +72,26 @@ export default function ImageDocument({ file }: DocumentProps) {
           onClick={increaseScale}
           className="p-2 bg-gray-200 rounded mb-2"
         >
-          ⬆️
+          🔍+
         </button>
-        <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
-          ⬇️
-        </button>
-
         <button
-          onClick={increaseScale}
+          onClick={decreaseScale}
           className="p-2 bg-gray-200 rounded mb-2"
         >
+          🔍-
+        </button>
+        <button onClick={increaseSize} className="p-2 bg-gray-200 rounded mb-2">
           ⬆️
         </button>
-        <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
+        <button onClick={decreaseSize} className="p-2 bg-gray-200 rounded">
           ⬇️
         </button>
       </div>
       <div
-        className="overflow-auto border-2"
+        className="overflow-scroll border-2"
         style={{
-          width: imageDimensions ? `${imageDimensions.width / 2}px` : "350px",
-          height: imageDimensions ? `${imageDimensions.height / 2}px` : "350px",
+          width: imageDimensions ? `${imageDimensions.width}px` : "350px",
+          height: imageDimensions ? `${imageDimensions.height}px` : "350px",
         }}
       >
         <div
@@ -79,13 +101,38 @@ export default function ImageDocument({ file }: DocumentProps) {
             position: "relative",
           }}
         >
-          {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img
             ref={imageRef}
             src={URL.createObjectURL(file)}
             alt="Selected file"
-            onLoad={onImageLoad}
-            style={{ width: "100%", height: "auto" }}
+            onLoad={() => {
+              if (imageRef.current) {
+                const img = imageRef.current;
+                const maxDimension = 350;
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                let width = img.naturalWidth;
+                let height = img.naturalHeight;
+
+                if (width > maxDimension || height > maxDimension) {
+                  if (width > height) {
+                    width = maxDimension;
+                    height = maxDimension / aspectRatio;
+                  } else {
+                    height = maxDimension;
+                    width = maxDimension * aspectRatio;
+                  }
+                }
+
+                setImageDimensions({
+                  width,
+                  height,
+                });
+              }
+            }}
+            style={{
+              width: imageDimensions ? `${imageDimensions.width}px` : "100%",
+              height: imageDimensions ? `${imageDimensions.height}px` : "auto",
+            }}
           />
         </div>
       </div>
