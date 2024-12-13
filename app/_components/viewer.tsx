@@ -41,7 +41,7 @@ const Viewer = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <DropFileInput onFileChange={onFileChange} />
-      <div className="">{renderFile()}</div>
+      {renderFile()}
     </div>
   );
 };

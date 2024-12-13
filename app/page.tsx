@@ -4,6 +4,7 @@ import { useState } from "react";
 import Viewer from "./_components/viewer";
 import { NextUIProvider } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 
 export default function Home() {
   const [pdfViewers, setPdfViewers] = useState<number[]>([]);
@@ -28,17 +29,20 @@ export default function Home() {
           </Button>
         </div>
         {pdfViewers.map((index: number) => (
-          <div key={index} className="flex flex-col items-center">
-            <Viewer />
-            <div className="flex mt-4">
+          <Card key={index} className="flex flex-col items-center p-2">
+            <CardHeader>
+              <Viewer />
+            </CardHeader>
+
+            <CardBody className="flex mt-4">
               <Button
                 onPress={() => removePdfViewer(index)}
                 className="px-4 py-2 bg-red-300 rounded mr-2"
               >
                 Remove PDF Viewer
               </Button>
-            </div>
-          </div>
+            </CardBody>
+          </Card>
         ))}
       </div>
     </NextUIProvider>

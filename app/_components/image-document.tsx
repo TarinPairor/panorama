@@ -16,7 +16,7 @@ export default function ImageDocument({ file }: DocumentProps) {
     if (imageRef.current) {
       const img = imageRef.current;
       img.onload = () => {
-        const maxDimension = 700;
+        const maxDimension = 500;
         const aspectRatio = img.naturalWidth / img.naturalHeight;
         let width = img.naturalWidth;
         let height = img.naturalHeight;
