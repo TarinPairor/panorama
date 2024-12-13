@@ -28,22 +28,24 @@ export default function Home() {
             Add PDF Viewer
           </Button>
         </div>
-        {pdfViewers.map((index: number) => (
-          <Card key={index} className="flex flex-col items-center p-2">
-            <CardHeader>
-              <Viewer />
-            </CardHeader>
+        <div className="flex gap-2">
+          {pdfViewers.map((index: number) => (
+            <Card key={index} className="flex flex-col items-center p-2">
+              <CardHeader>
+                <Viewer />
+              </CardHeader>
 
-            <CardBody className="flex mt-4">
-              <Button
-                onPress={() => removePdfViewer(index)}
-                className="px-4 py-2 bg-red-300 rounded mr-2"
-              >
-                Remove PDF Viewer
-              </Button>
-            </CardBody>
-          </Card>
-        ))}
+              <CardBody className="flex mt-4">
+                <Button
+                  onPress={() => removePdfViewer(index)}
+                  className="px-4 py-2 bg-red-300 rounded mr-2"
+                >
+                  Remove PDF Viewer
+                </Button>
+              </CardBody>
+            </Card>
+          ))}
+        </div>
       </div>
     </NextUIProvider>
   );
