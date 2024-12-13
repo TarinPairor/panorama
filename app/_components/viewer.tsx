@@ -40,12 +40,6 @@ const Viewer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {/* <input
-        type="file"
-        accept="application/pdf,image/*"
-        onChange={onFileChange}
-        className="mb-4"
-      /> */}
       <DropFileInput onFileChange={onFileChange} />
       <div className="">{renderFile()}</div>
     </div>

@@ -54,6 +54,16 @@ export default function ImageDocument({ file }: DocumentProps) {
         <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
           ⬇️
         </button>
+
+        <button
+          onClick={increaseScale}
+          className="p-2 bg-gray-200 rounded mb-2"
+        >
+          ⬆️
+        </button>
+        <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
+          ⬇️
+        </button>
       </div>
       <div
         className="overflow-auto border-2"
@@ -69,6 +79,7 @@ export default function ImageDocument({ file }: DocumentProps) {
             position: "relative",
           }}
         >
+          {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img
             ref={imageRef}
             src={URL.createObjectURL(file)}
