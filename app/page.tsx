@@ -4,7 +4,7 @@ import { useState } from "react";
 import Viewer from "./_components/viewer";
 import { NextUIProvider } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 export default function Home() {
   const [pdfViewers, setPdfViewers] = useState<number[]>([]);

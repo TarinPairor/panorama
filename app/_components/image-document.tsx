@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from "react";
 
 interface DocumentProps {
@@ -49,19 +50,19 @@ export default function ImageDocument({ file }: DocumentProps) {
 
   const increaseSize = () => {
     if (imageDimensions) {
-      setImageDimensions((prevDimensions) => ({
-        width: prevDimensions.width + 10,
-        height: prevDimensions.height + 10,
-      }));
+      //   setImageDimensions((prevDimensions) => ({
+      //     width: prevDimensions.width + 10,
+      //     height: prevDimensions.height + 10,
+      //   }));
     }
   };
 
   const decreaseSize = () => {
     if (imageDimensions) {
-      setImageDimensions((prevDimensions) => ({
-        width: Math.max(prevDimensions.width - 10, 10),
-        height: Math.max(prevDimensions.height - 10, 10),
-      }));
+      //   setImageDimensions((prevDimensions) => ({
+      //     width: Math.max(prevDimensions.width - 10, 10),
+      //     height: Math.max(prevDimensions.height - 10, 10),
+      //   }));
     }
   };
 
