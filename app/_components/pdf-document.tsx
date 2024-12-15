@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
@@ -44,14 +45,21 @@ export default function PDFDocument({ file }: DocumentProps) {
   return (
     <div className="flex items-start m-2">
       <div className="flex flex-col">
-        <button
-          onClick={increaseScale}
-          className="p-2 bg-gray-200 rounded mb-2"
-        >
-          ⬆️
+        <button onClick={increaseScale} className="p-2  rounded mb-2">
+          <Image
+            src="/zoom-in-svgrepo-com.svg"
+            alt="zoom in"
+            width={20}
+            height={20}
+          />
         </button>
-        <button onClick={decreaseScale} className="p-2 bg-gray-200 rounded">
-          ⬇️
+        <button onClick={decreaseScale} className="p-2 rounded mb-2">
+          <Image
+            src="/zoom-out-svgrepo-com.svg"
+            alt="zoom in"
+            width={20}
+            height={20}
+          />
         </button>
       </div>
       <div

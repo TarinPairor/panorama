@@ -5,7 +5,7 @@ import Viewer from "./_components/viewer";
 import { NextUIProvider } from "@nextui-org/react";
 import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import AddCardButton from "./_components/add-card-button";
-
+import Image from "next/image";
 interface ViewerCard {
   id: number;
   type: "viewer" | "button";
@@ -48,12 +48,14 @@ export default function Home() {
                 <Viewer />
               </CardHeader>
               <CardBody className="flex mt-4">
-                <Button
-                  onPress={() => removePdfViewer(card.id)}
-                  className="px-4 py-2 bg-red-300 rounded mr-2"
-                >
-                  Remove PDF Viewer
-                </Button>
+                <div onClick={() => removePdfViewer(card.id)} className="">
+                  <Image
+                    src="/trash.svg"
+                    alt="trash"
+                    width={100}
+                    height={100}
+                  />
+                </div>
               </CardBody>
             </Card>
           ) : (
