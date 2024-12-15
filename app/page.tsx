@@ -3,49 +3,65 @@
 import { useState } from "react";
 import Viewer from "./_components/viewer";
 import { NextUIProvider } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import AddCardButton from "./_components/add-card-button";
+
+interface ViewerCard {
+  id: number;
+  type: "viewer" | "button";
+}
 
 export default function Home() {
-  const [pdfViewers, setPdfViewers] = useState<number[]>([]);
+  const [viewerCards, setViewerCards] = useState<ViewerCard[]>([
+    { id: 0, type: "viewer" },
+    { id: 1, type: "button" },
+  ]);
 
-  const addPdfViewer = () => {
-    setPdfViewers([...pdfViewers, pdfViewers.length]);
+  const addPdfViewer = (id: number) => {
+    const newViewerCard: ViewerCard = {
+      id: viewerCards.length,
+      type: "viewer",
+    };
+    const newButtonCard: ViewerCard = {
+      id: viewerCards.length + 1,
+      type: "button",
+    };
+
+    const updatedViewerCards = viewerCards.flatMap((card) =>
+      card.id === id ? [newViewerCard, newButtonCard] : [card]
+    );
+
+    setViewerCards(updatedViewerCards);
   };
 
   const removePdfViewer = (id: number) => {
-    setPdfViewers(pdfViewers.filter((index) => index !== id));
+    setViewerCards(viewerCards.filter((card) => card.id !== id));
   };
 
   return (
     <NextUIProvider>
-      <div className="font-[family-name:var(--font-geist-sans)] flex">
-        <div className="mt-4">
-          <Button
-            onPress={addPdfViewer}
-            className="px-4 py-2 bg-gray-300 rounded mr-2"
-          >
-            Add PDF Viewer
-          </Button>
-        </div>
-        <div className="flex gap-2">
-          {pdfViewers.map((index: number) => (
-            <Card key={index} className="flex flex-col items-center p-2">
+      <div className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-2 overflow-auto">
+        {viewerCards.map((card) =>
+          card.type === "viewer" ? (
+            <Card key={card.id} className="flex flex-col items-center p-2">
               <CardHeader>
                 <Viewer />
               </CardHeader>
-
               <CardBody className="flex mt-4">
                 <Button
-                  onPress={() => removePdfViewer(index)}
+                  onPress={() => removePdfViewer(card.id)}
                   className="px-4 py-2 bg-red-300 rounded mr-2"
                 >
                   Remove PDF Viewer
                 </Button>
               </CardBody>
             </Card>
-          ))}
-        </div>
+          ) : (
+            <div key={card.id} className="mt-4">
+              <AddCardButton onClick={() => addPdfViewer(card.id)} />
+            </div>
+          )
+        )}
       </div>
     </NextUIProvider>
   );

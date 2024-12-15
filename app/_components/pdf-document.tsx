@@ -57,8 +57,8 @@ export default function PDFDocument({ file }: DocumentProps) {
       <div
         className="overflow-auto border-2"
         style={{
-          width: pageDimensions ? `${pageDimensions.width / 2}px` : "350px",
-          height: pageDimensions ? `${pageDimensions.height / 2}px` : "350px",
+          width: pageDimensions ? `${pageDimensions.width}px` : "350px",
+          height: pageDimensions ? `${pageDimensions.height}px` : "350px",
         }}
       >
         <Document
@@ -71,8 +71,8 @@ export default function PDFDocument({ file }: DocumentProps) {
             pageNumber={pageNumber}
             scale={scale}
             onLoadSuccess={onPageLoadSuccess}
-            width={(pageDimensions?.width ?? 700) / 2}
-            height={(pageDimensions?.height ?? 700) / 2}
+            width={pageDimensions?.width ?? 700}
+            height={pageDimensions?.height ?? 700}
           />
         </Document>
       </div>
