@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <NextUIProvider>
-      <div className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-2 overflow-auto">
+      <div className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-1 overflow-auto">
         {viewerCards.map((card) =>
           card.type === "viewer" ? (
             <Card key={card.id} className="flex flex-col items-center p-2">
