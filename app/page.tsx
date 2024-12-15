@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Viewer from "./_components/viewer";
 import { NextUIProvider } from "@nextui-org/react";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import AddCardButton from "./_components/add-card-button";
-import Image from "next/image";
+import DeleteCardButton from "./_components/delete-card-button";
+
 interface ViewerCard {
   id: number;
   type: "viewer" | "button";
@@ -48,14 +49,7 @@ export default function Home() {
                 <Viewer />
               </CardHeader>
               <CardBody className="flex mt-4">
-                <div onClick={() => removePdfViewer(card.id)} className="">
-                  <Image
-                    src="/trash.svg"
-                    alt="trash"
-                    width={100}
-                    height={100}
-                  />
-                </div>
+                <DeleteCardButton onClick={() => removePdfViewer(card.id)} />
               </CardBody>
             </Card>
           ) : (
