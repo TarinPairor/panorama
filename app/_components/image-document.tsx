@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 
 interface DocumentProps {
@@ -48,45 +49,49 @@ export default function ImageDocument({ file }: DocumentProps) {
     setScale((prevScale) => Math.max(prevScale - 0.1, 0.1));
   };
 
-  const increaseSize = () => {
-    if (imageDimensions) {
-      //   setImageDimensions((prevDimensions) => ({
-      //     width: prevDimensions.width + 10,
-      //     height: prevDimensions.height + 10,
-      //   }));
-    }
-  };
+  // const increaseSize = () => {
+  //   if (imageDimensions) {
+  //     //   setImageDimensions((prevDimensions) => ({
+  //     //     width: prevDimensions.width + 10,
+  //     //     height: prevDimensions.height + 10,
+  //     //   }));
+  //   }
+  // };
 
-  const decreaseSize = () => {
-    if (imageDimensions) {
-      //   setImageDimensions((prevDimensions) => ({
-      //     width: Math.max(prevDimensions.width - 10, 10),
-      //     height: Math.max(prevDimensions.height - 10, 10),
-      //   }));
-    }
-  };
+  // const decreaseSize = () => {
+  //   if (imageDimensions) {
+  //     //   setImageDimensions((prevDimensions) => ({
+  //     //     width: Math.max(prevDimensions.width - 10, 10),
+  //     //     height: Math.max(prevDimensions.height - 10, 10),
+  //     //   }));
+  //   }
+  // };
 
   return (
     <div className="flex flex-grow items-start m-2">
       <div className="flex flex-col mr-4">
-        <button
-          onClick={increaseScale}
-          className="p-2 bg-gray-200 rounded mb-2"
-        >
-          🔍+
+        <button onClick={increaseScale} className="p-2  rounded mb-2">
+          <Image
+            src="/zoom-in-svgrepo-com.svg"
+            alt="zoom in"
+            width={20}
+            height={20}
+          />
         </button>
-        <button
-          onClick={decreaseScale}
-          className="p-2 bg-gray-200 rounded mb-2"
-        >
-          🔍-
+        <button onClick={decreaseScale} className="p-2 rounded mb-2">
+          <Image
+            src="/zoom-out-svgrepo-com.svg"
+            alt="zoom in"
+            width={20}
+            height={20}
+          />
         </button>
-        <button onClick={increaseSize} className="p-2 bg-gray-200 rounded mb-2">
+        {/* <button onClick={increaseSize} className="p-2 bg-gray-200 rounded mb-2">
           ⬆️
         </button>
         <button onClick={decreaseSize} className="p-2 bg-gray-200 rounded">
           ⬇️
-        </button>
+        </button> */}
       </div>
       <div
         className="overflow-scroll border-2"
