@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { Input } from "@nextui-org/react";
 
 interface DocumentProps {
   file: File;
@@ -24,22 +25,24 @@ export default function PDFDocument({ file }: DocumentProps) {
     setPageDimensions({ width: viewport.width, height: viewport.height });
   }
 
-  function goToPrevPage() {
-    setPageNumber((prevPageNumber) => Math.max(prevPageNumber - 1, 1));
-  }
-
-  function goToNextPage() {
-    setPageNumber((prevPageNumber) =>
-      Math.min(prevPageNumber + 1, numPages || 1)
-    );
-  }
-
   const increaseScale = () => {
     setScale((prevScale) => Math.min(prevScale + 0.1, 4));
   };
 
   const decreaseScale = () => {
     setScale((prevScale) => Math.max(prevScale - 0.1, 1));
+  };
+
+  const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    setPageNumber(value);
+  };
+
+  const handlePageInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && numPages) {
+      const value = parseInt((e.target as HTMLInputElement).value, 10);
+      setPageNumber(value);
+    }
   };
 
   return (
@@ -49,16 +52,16 @@ export default function PDFDocument({ file }: DocumentProps) {
           <Image
             src="/zoom-in-svgrepo-com.svg"
             alt="zoom in"
-            width={20}
-            height={20}
+            width={30}
+            height={30}
           />
         </button>
         <button onClick={decreaseScale} className="p-2 rounded mb-2">
           <Image
             src="/zoom-out-svgrepo-com.svg"
             alt="zoom in"
-            width={20}
-            height={20}
+            width={30}
+            height={30}
           />
         </button>
       </div>
@@ -84,26 +87,20 @@ export default function PDFDocument({ file }: DocumentProps) {
           />
         </Document>
       </div>
-      <div className="flex flex-col mt-4">
-        <button
-          onClick={goToPrevPage}
-          onMouseEnter={() => console.log("hover")}
-          disabled={pageNumber <= 1}
-          className=""
-        >
-          ⬆️
-        </button>
-        <button
-          onClick={goToNextPage}
-          disabled={pageNumber >= (numPages || 1)}
-          className=""
-        >
-          ⬇️
-        </button>
+
+      <div className="mt-4 flex items-center">
+        <Input
+          value={pageNumber.toString()}
+          onChange={handlePageInputChange}
+          onKeyDown={handlePageInputKeyDown}
+          type="number"
+          min={0}
+          max={numPages}
+          className="w-16"
+          errorMessage={pageNumber > (numPages || 1) ? "Invalid page" : ""}
+        />
+        <span className="ml-2">/ {numPages}</span>
       </div>
-      <p className="mt-4 flex">
-        {pageNumber}/{numPages}
-      </p>
     </div>
   );
 }

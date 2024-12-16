@@ -69,21 +69,21 @@ export default function ImageDocument({ file }: DocumentProps) {
 
   return (
     <div className="flex flex-grow items-start m-2">
-      <div className="flex flex-col mr-4">
+      <div className="flex flex-col">
         <button onClick={increaseScale} className="p-2  rounded mb-2">
           <Image
             src="/zoom-in-svgrepo-com.svg"
             alt="zoom in"
-            width={20}
-            height={20}
+            width={30}
+            height={30}
           />
         </button>
         <button onClick={decreaseScale} className="p-2 rounded mb-2">
           <Image
             src="/zoom-out-svgrepo-com.svg"
             alt="zoom in"
-            width={20}
-            height={20}
+            width={30}
+            height={30}
           />
         </button>
         {/* <button onClick={increaseSize} className="p-2 bg-gray-200 rounded mb-2">

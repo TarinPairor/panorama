@@ -16,11 +16,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 const Viewer = () => {
   const [file, setFile] = useState<File | null>(null);
 
-  // function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
-  //   const selectedFile = event.target.files?.[0] || null;
-  //   setFile(selectedFile);
-  // }
-
   function onFileChange(selectedFile: File | null): void {
     setFile(selectedFile);
   }
